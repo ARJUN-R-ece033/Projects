@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .choices img {
+            width: 100px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .results table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .results table, .results th, .results td {
+            border: 1px solid black;
+        }
+        .results th, .results td {
+            padding: 10px;
+            text-align: center;
+        }
+        .score {
+            margin-top: 20px;
+        }
+        button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rock Paper Scissors Game</h1>
+    <div class="choices">
+        <img src="Rock.jpeg" alt="Rock" id="rock">
+        <img src="Paper.jpeg" alt="Paper" id="paper">
+        <img src="Scissors.jpeg" alt="Scissors" id="scissors">
+    </div>
+    <div class="results">
+        <table>
+            <thead>
+                <tr>
+                    <th>Your Choice</th>
+                    <th>Computer Choice</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="your-choice"></td>
+                    <td id="computer-choice"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="score">
+        <p>Wins: <span id="wins">0</span> Losses: <span id="losses">0</span> Ties: <span id="ties">0</span></p>
+    </div>
+    <button id="reset">Reset</button>
+
+    <script>
+        const choices = ['rock', 'paper', 'scissors'];
+        let wins = 0;
+        let losses = 0;
+        let ties = 0;
+
+        document.querySelectorAll('.choices img').forEach(img => {
+            img.addEventListener('click', () => {
+                const yourChoice = img.id;
+                const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+                document.getElementById('your-choice').textContent = yourChoice;
+                document.getElementById('computer-choice').textContent = computerChoice;
+
+                if (yourChoice === computerChoice) {
+                    ties++;
+                } else if (
+                    (yourChoice === 'rock' && computerChoice === 'scissors') ||
+                    (yourChoice === 'paper' && computerChoice === 'rock') ||
+                    (yourChoice === 'scissors' && computerChoice === 'paper')
+                ) {
+                    wins++;
+                } else {
+                    losses++;
+                }
+
+                document.getElementById('wins').textContent = wins;
+                document.getElementById('losses').textContent = losses;
+                document.getElementById('ties').textContent = ties;
+            });
+        });
+
+        document.getElementById('reset').addEventListener('click', () => {
+            wins = 0;
+            losses = 0;
+            ties = 0;
+            document.getElementById('your-choice').textContent = '';
+            document.getElementById('computer-choice').textContent = '';
+            document.getElementById('wins').textContent = wins;
+            document.getElementById('losses').textContent = losses;
+            document.getElementById('ties').textContent = ties;
+        });
+    </script>
+</body>
+</html>
